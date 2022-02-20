@@ -32,9 +32,9 @@ const Home = () => {
       <Container sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', pt: { xs: 10, md: 20}}}>
         <Grid container spacing={2} justify="space-evenly">
           <Grid item xs={12} sm={6} md={4} align="center">
-            <Fade in={true} timeout={1000}>
-              <ButtonBase sx={{display: 'inline-block', borderRadius: 10}}>
-                <Box>
+            <Fade in={true} timeout={1500}>
+              <ButtonBase sx={{display: 'inline-block', borderRadius: 10, backdropFilter: 'blur(10px)', background: 'linear-gradient(to left, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05))', boxShadow: '0 0 5px 10px rgba(255, 255, 255, 0.04)'}}>
+                <Box sx={{mt: 2}}>
                   <img src={KittyBank} alt="arcade" height={theme.spacing(15)} width={theme.spacing(30)}/>
                 </Box>
                 <Box>
@@ -44,8 +44,8 @@ const Home = () => {
             </Fade>
           </Grid>
           <Grid item xs={12} sm={6} md={4} align="center">
-            <Fade in={true} timeout={1200}>
-              <ButtonBase sx={{display: 'inline-block', borderRadius: 10}}>
+            <Fade in={true} timeout={1000}>
+              <ButtonBase sx={{display: 'inline-block', borderRadius: 10, backdropFilter: 'blur(10px)', background: 'radial-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05))', boxShadow: '0 0 5px 10px rgba(255, 255, 255, 0.04)'}}>
                 <Box>
                   <img src={Arcade} alt="arcade" height={theme.spacing(15)} width={theme.spacing(30)}/>
                 </Box>
@@ -57,7 +57,7 @@ const Home = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4} align="center">
             <Fade in={true} timeout={1500}>
-              <ButtonBase sx={{display: 'inline-block', borderRadius: 10}}>
+              <ButtonBase sx={{display: 'inline-block', borderRadius: 10, backdropFilter: 'blur(10px)', background: 'linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05))', boxShadow: '0 0 5px 10px rgba(255, 255, 255, 0.04)'}}>
                 <Box>
                   <img src={Bifrost} alt="arcade" height={theme.spacing(15)} width={theme.spacing(30)}/>
                 </Box>

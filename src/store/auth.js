@@ -6,6 +6,11 @@ export const accountsAtom = atom({
   default: []
 });
 
+export const containsTokenAtom = atom({
+  key: 'account_contains_token',
+  default: false
+});
+
 export const metamaskPresentAtom = atom({
   key: 'metamask_present',
   default: true
