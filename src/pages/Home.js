@@ -1,6 +1,7 @@
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useState } from "react";
 import {
   Container,
   Grid,
@@ -18,7 +19,8 @@ import BankPlanetImg from "../assets/images/BankPlanet.png";
 import Bifrost from "../assets/images/Bifrost.png";
 import BifrostPlanetImg from "../assets/images/BifrostPlanet.png";
 import HomeCard from "../ui/HomeCard";
-import { accountAtom, metamaskPresentAtom, v1DetailsAtom } from "../store/auth";
+import { accountAtom, containsTokenAtom, metamaskPresentAtom, v1DetailsAtom } from "../store/auth";
+import NoTokensFoundDialog from "../modals/NoTokensFoundDialog";
 
 
 
@@ -27,18 +29,23 @@ const Home = () => {
   const v1Details = useRecoilValue(v1DetailsAtom);
   const [account, setAccount] = useRecoilState(accountAtom);
   const [metamaskPresent, setMetamaskPresent] = useRecoilState(metamaskPresentAtom);
-  console.log("v1 Details", v1Details);
-  console.log("In home component", window.ethereum);
+  const [ , setContainsToken ] = useRecoilState(containsTokenAtom);
+  const [open, setOpen] = useState(false);
+
 
   const handleArcadeClick = async () => {
     console.log("Hey")
     if(metamaskPresent) {
 
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-;
       if(account) {
         const contract = new ethers.Contract(v1Details.contract_address, v1Details.contract_abi, provider);
         const balance = await contract.balanceOf(account);
+        if(parseInt(balance.toString()) > 0) {
+          setContainsToken(true);
+        } else {
+          setOpen(true);
+        }
 
       } else {
         // setAccounts()
@@ -94,68 +101,10 @@ const Home = () => {
         </Grid>
 
       </Container>
+      <NoTokensFoundDialog open={open} onClose={() => setOpen(false)} />
     </div>
   )
-}
+};
 
-// const Home = () => {
-//   return (
-//     <Container
-//       className="root"
-//       style={{
-//         minHeight: "100vh",
-//         minWidth: "100vw",
-//         background: `url(${Background})`,
-//         backgroundRepeat: "no-repeat",
-//         backgroundSize: "cover",
-//         display: "flex",
-//         alignItems: "center",
-//         justifyContent: "center",
-//       }}
-//     >
-//       <Row className="justify-content-center">
-//         <Col md="4" sm="12">
-//           <div className="row">
-//             <div className="col-lg-8 col-md-8 mx-auto">
-//                 <img className="planet-name" src={Arcade} alt="arcade" />
-//             </div>
-//           </div>
-//           <div className="planet-div">
-//             <img
-//               className="zoom"
-//               data-bs-toggle="tooltip" data-bs-placement="right" title="Holders Only"
-//               style={{ cursor: "pointer" }}
-//               src={ArcadePlanetImg}
-//               alt="arcadeImg"
-//             />
-//           </div>
-//          </Col>
-//         <Col md="4" sm="12">
-//         <div className="row">
-//             <div className="col-lg-8 col-md-8 mx-auto">
-//             <img className="planet-name" src={KittyBank} alt="arcade" />
-//             </div>
-//           </div>
-//           <div className="planet-div">
-//             {/* <Link to="/1"> */}
-//             <img className="zoom" src={BankPlanetImg} alt="kitty"/>
-//             {/* </Link> */}
-//           </div>
-//         </Col>
-//         <Col md="4" sm="12">
-//         <div className="row">
-//             <div className="col-lg-8 col-md-8 mx-auto">
-//             <img className="planet-name" src={Bifrost}  alt="bifrost" />
-//             </div>
-//           </div>
-//           <div className="planet-div">
-//             <img className="zoom" src={BifrostPlanetImg} alt="bifrostplanet"/>
-//           </div>
-//         </Col>
-//       </Row>
-
-//     </Container>
-//   );
-// };
 
 export default Home;
